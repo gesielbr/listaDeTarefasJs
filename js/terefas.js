@@ -1,6 +1,12 @@
 let inputNovaTarefa = document.querySelector('#inputNovaTarefa');
 let btnAddTarefa = document.querySelector('#btnAddTarefa');
 let listaTarefas = document.querySelector('#listaTarefas');
+let janelaEdicao = document.querySelector('#janelaEdicao');
+let janelaEdicaoFundo = document.querySelector('#janelaEdicaoFundo');
+let janelaEdicaoBtnFechar = document.querySelector('#janelaEdicaoBtnFechar');
+let btnatuAlizarTarefa = document.querySelector('#btnAtualizarTarefa');
+let idTarefaEdicao = document.querySelector('#idTarefaEdicao');
+let inputTarefaNomeEdicao = document.querySelector('#inputTarefaNomeEdicao');
 
 inputNovaTarefa.addEventListener('keypress', e => {
     if (e.keyCode == 13) {
@@ -12,12 +18,33 @@ inputNovaTarefa.addEventListener('keypress', e => {
     }
 });
 
+janelaEdicaoBtnFechar.addEventListener('click', e => {
+    alternarJanelaEdicao();
+});
+
 btnAddTarefa.addEventListener('click', e => {
     let tarefa = {
         nome: inputNovaTarefa.value,
         id: gerarId()
     };
     adicionarTarefa(tarefa);
+});
+
+btnatuAlizarTarefa.addEventListener('click', e => {
+    e.preventDefault();
+    let idTarefa = idTarefaEdicao.innerHTML.replace('#', '');
+    let tarefa = {
+        nome: inputTarefaNomeEdicao.value,
+        id: idTarefa
+    };
+
+    let tarefaAtual = document.getElementById('' + idTarefa + '');
+
+    if (tarefaAtual) {
+        let li = criarTagLI(tarefa);
+        listaTarefas.replaceChild(li, tarefaAtual);
+        alternarJanelaEdicao();
+    }
 });
 
 function gerarId() {
@@ -32,6 +59,7 @@ function adicionarTarefa(tarefa) {
 
 function criarTagLI(tarefa) {
     let li = document.createElement('li');
+    li.id = tarefa.id;
 
     let span = document.createElement('span');
     span.classList.add('textoTarefa');
@@ -58,8 +86,25 @@ function criarTagLI(tarefa) {
 }
 
 function editar(idTarefa) {
-    alert(idTarefa);
+    let li = document.getElementById('' + idTarefa + '');
+    if (li) {
+        idTarefaEdicao.innerHTML = '#' + idTarefa;
+        inputTarefaNomeEdicao.value = li.innerText;
+        alternarJanelaEdicao();
+    }
 }
+
 function excluir(idTarefa) {
-    alert(idTarefa);
+    let confirmacao = window.confirm('Tem certeza que deseja excluir? ');
+    if (confirmacao) {
+        let li = document.getElementById('' + idTarefa + '');
+        if (li) {
+            listaTarefas.removeChild(li);
+        }
+    }
+}
+
+function alternarJanelaEdicao() {
+    janelaEdicao.classList.toggle('abrir');
+    janelaEdicaoFundo.classList.toggle('abrir');
 }
