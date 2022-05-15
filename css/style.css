@@ -53,6 +53,13 @@ body {
     cursor: pointer;
 }
 
+.textoTarefa {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 290px;
+    white-space: nowrap;
+}
+
 #listaTarefas {
     list-style-type: none;
     padding: 0;

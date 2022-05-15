@@ -58,31 +58,35 @@ function adicionarTarefa(tarefa) {
 }
 
 function criarTagLI(tarefa) {
-    let li = document.createElement('li');
-    li.id = tarefa.id;
+    if (inputNovaTarefa.value == '') {
+        alert('Adicione uma tarefa');
+    } else {
+        let li = document.createElement('li');
+        li.id = tarefa.id;
 
-    let span = document.createElement('span');
-    span.classList.add('textoTarefa');
-    span.innerHTML = tarefa.nome;
+        let span = document.createElement('span');
+        span.classList.add('textoTarefa');
+        span.innerHTML = tarefa.nome;
 
-    let div = document.createElement('div');
+        let div = document.createElement('div');
 
-    let btnEditar = document.createElement('button');
-    btnEditar.classList.add('btnAcao', 'editatTarefa');
-    btnEditar.innerHTML = '<i class="fa fa-pencil"></i>';
-    btnEditar.setAttribute('onclick', 'editar(' + tarefa.id + ')');
+        let btnEditar = document.createElement('button');
+        btnEditar.classList.add('btnAcao', 'editatTarefa');
+        btnEditar.innerHTML = '<i class="fa fa-pencil"></i>';
+        btnEditar.setAttribute('onclick', 'editar(' + tarefa.id + ')');
 
-    let btnExcluir = document.createElement('button');
-    btnExcluir.classList.add('btnAcao', 'removerTarefa');
-    btnExcluir.innerHTML = '<i class="fa fa-trash"></i>';
-    btnExcluir.setAttribute('onclick', 'excluir(' + tarefa.id + ')');
+        let btnExcluir = document.createElement('button');
+        btnExcluir.classList.add('btnAcao', 'removerTarefa');
+        btnExcluir.innerHTML = '<i class="fa fa-trash"></i>';
+        btnExcluir.setAttribute('onclick', 'excluir(' + tarefa.id + ')');
 
-    div.appendChild(btnEditar);
-    div.appendChild(btnExcluir);
+        div.appendChild(btnEditar);
+        div.appendChild(btnExcluir);
 
-    li.appendChild(span);
-    li.appendChild(div);
-    return li;
+        li.appendChild(span);
+        li.appendChild(div);
+        return li;
+    }
 }
 
 function editar(idTarefa) {
